@@ -4,9 +4,8 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 
 from src.database import get_commits_df
-from src.dashboard.pages.overview import FRIENDLY_NAMES
+from src.dashboard.theme import FRIENDLY_NAMES
 
-dash.register_page(__name__, path="/details", name="Commit Details")
 
 layout = html.Div([
     html.H3("Commit Details", className="mb-4"),
@@ -25,7 +24,7 @@ layout = html.Div([
             width=3,
         ),
         dbc.Col(
-            dbc.Button("Export CSV", id="export-csv-btn", color="secondary", size="sm"),
+            dbc.Button("Export CSV", id="export-csv-btn", className="btn-cyber", size="sm"),
             width=2,
         ),
     ], className="mb-3"),
@@ -83,14 +82,40 @@ def render_details(filters, class_filter, *_):
         sort_action="native",
         filter_action="native",
         style_table={"overflowX": "auto"},
-        style_cell={"textAlign": "left", "padding": "8px", "fontSize": "13px"},
-        style_header={"fontWeight": "bold", "backgroundColor": "#f8f9fa"},
+        style_cell={
+            "textAlign": "left",
+            "padding": "10px 12px",
+            "fontSize": "13px",
+            "fontFamily": "Courier New, monospace",
+            "backgroundColor": "#161635",
+            "color": "#e0e0ff",
+            "border": "1px solid rgba(0, 240, 255, 0.08)",
+        },
+        style_header={
+            "fontWeight": "bold",
+            "backgroundColor": "#12122a",
+            "color": "#00f0ff",
+            "border": "1px solid rgba(0, 240, 255, 0.15)",
+            "textTransform": "uppercase",
+            "fontSize": "11px",
+            "letterSpacing": "0.5px",
+        },
         style_data_conditional=[
             {
                 "if": {"filter_query": '{Classification} != "Human"'},
-                "backgroundColor": "#fff3f3",
+                "backgroundColor": "rgba(255, 0, 229, 0.08)",
+                "borderLeft": "2px solid #ff00e5",
+            },
+            {
+                "if": {"state": "active"},
+                "backgroundColor": "rgba(0, 240, 255, 0.12)",
+                "border": "1px solid rgba(0, 240, 255, 0.3)",
             },
         ],
+        style_filter={
+            "backgroundColor": "#1a1a3e",
+            "color": "#e0e0ff",
+        },
     )
 
     return html.Div([

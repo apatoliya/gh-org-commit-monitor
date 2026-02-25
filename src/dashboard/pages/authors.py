@@ -5,9 +5,8 @@ import plotly.express as px
 import pandas as pd
 
 from src.database import get_commits_df
-from src.dashboard.pages.overview import FRIENDLY_NAMES
+from src.dashboard.theme import FRIENDLY_NAMES, apply_dark_layout
 
-dash.register_page(__name__, path="/authors", name="Authors")
 
 layout = html.Div([
     html.H3("Author Breakdown", className="mb-4"),
@@ -62,8 +61,9 @@ def render_authors(filters, *_):
         title="Top 20 Authors by AI-Assisted Code %",
         labels={"author_login": "Author", "ai_pct": "AI-Assisted %"},
         color="ai_pct",
-        color_continuous_scale="Reds",
+        color_continuous_scale=[[0, "#0a0a1a"], [0.5, "#b34dff"], [1, "#ff00e5"]],
     )
+    apply_dark_layout(bar_fig)
     bar_fig.update_layout(xaxis_tickangle=-45)
 
     # AI adoption trend per author over time
@@ -79,6 +79,7 @@ def render_authors(filters, *_):
             title="AI-Assisted Commits Over Time (Top 5 Authors)",
             labels={"month": "Month", "ai_commits": "AI Commits", "author_login": "Author"},
         )
+        apply_dark_layout(trend_fig)
         trend_chart = dcc.Graph(figure=trend_fig)
     else:
         trend_chart = dbc.Alert("No AI-assisted commits found.", color="info")

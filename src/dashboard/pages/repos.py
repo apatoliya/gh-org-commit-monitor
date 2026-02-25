@@ -5,8 +5,8 @@ import plotly.express as px
 import pandas as pd
 
 from src.database import get_commits_df
+from src.dashboard.theme import apply_dark_layout
 
-dash.register_page(__name__, path="/repos", name="Repositories")
 
 layout = html.Div([
     html.H3("Repository Breakdown", className="mb-4"),
@@ -63,9 +63,10 @@ def render_repos(filters, *_):
         bar_data, x="repo_short", y="count", color="type",
         title="Top 20 Repos: Human vs AI-Assisted Commits",
         barmode="stack",
-        color_discrete_map={"Human": "#636EFA", "AI-Assisted": "#EF553B"},
+        color_discrete_map={"Human": "#00f0ff", "AI-Assisted": "#ff3c5f"},
         labels={"repo_short": "Repository", "count": "Commits"},
     )
+    apply_dark_layout(bar_fig)
     bar_fig.update_layout(xaxis_tickangle=-45, legend=dict(orientation="h", y=-0.25))
 
     # Summary table

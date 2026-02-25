@@ -2,50 +2,19 @@ import dash
 from dash import html, dcc, callback, Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
 
 from src.database import get_commits_df
-
-dash.register_page(__name__, path="/", name="Overview")
-
-# Color map for classifications
-CLASS_COLORS = {
-    "human": "#636EFA",
-    "ai_claude": "#EF553B",
-    "ai_copilot": "#00CC96",
-    "ai_cursor": "#AB63FA",
-    "ai_codex": "#FFA15A",
-    "ai_aider": "#19D3F3",
-    "ai_cody": "#FF6692",
-    "ai_devin": "#B6E880",
-    "ai_gemini": "#FF97FF",
-    "ai_windsurf": "#FECB52",
-    "ai_other": "#999999",
-}
-
-FRIENDLY_NAMES = {
-    "human": "Human",
-    "ai_claude": "Claude",
-    "ai_copilot": "GitHub Copilot",
-    "ai_cursor": "Cursor",
-    "ai_codex": "Codex",
-    "ai_aider": "Aider",
-    "ai_cody": "Cody",
-    "ai_devin": "Devin",
-    "ai_gemini": "Gemini",
-    "ai_windsurf": "Windsurf",
-    "ai_other": "Other AI",
-}
+from src.dashboard.theme import CLASS_COLORS, FRIENDLY_NAMES, apply_dark_layout
 
 
-def _kpi_card(title: str, value: str, color: str = "primary"):
+def _kpi_card(title: str, value: str, color: str = "neon-cyan"):
     return dbc.Card(
         dbc.CardBody([
-            html.H6(title, className="card-subtitle mb-2 text-muted"),
-            html.H3(value, className=f"card-title text-{color}"),
+            html.H6(title, className="card-subtitle mb-2"),
+            html.H3(value, className=f"card-title kpi-value text-{color}"),
         ]),
-        className="shadow-sm",
+        className="kpi-card",
     )
 
 
@@ -90,10 +59,10 @@ def render_overview(filters, *_):
     # KPI cards
     kpi_row = dbc.Row([
         dbc.Col(_kpi_card("Total Commits", f"{total:,}"), width=2),
-        dbc.Col(_kpi_card("AI-Assisted", f"{ai_count:,} ({ai_pct})", "danger"), width=3),
-        dbc.Col(_kpi_card("Human", f"{human_count:,}", "success"), width=2),
-        dbc.Col(_kpi_card("Repos Monitored", str(repos_count), "info"), width=2),
-        dbc.Col(_kpi_card("Active Authors", str(authors_count), "warning"), width=2),
+        dbc.Col(_kpi_card("AI-Assisted", f"{ai_count:,} ({ai_pct})", "neon-magenta"), width=3),
+        dbc.Col(_kpi_card("Human", f"{human_count:,}", "neon-green"), width=2),
+        dbc.Col(_kpi_card("Repos Monitored", str(repos_count), "neon-yellow"), width=2),
+        dbc.Col(_kpi_card("Active Authors", str(authors_count), "neon-purple"), width=2),
     ], className="mb-4 g-3")
 
     # Trend chart: AI vs Human over time (weekly)
@@ -105,9 +74,10 @@ def render_overview(filters, *_):
     trend_fig = px.line(
         weekly, x="week", y="count", color="type",
         title="Commits Over Time (Weekly)",
-        color_discrete_map={"AI-Assisted": "#EF553B", "Human": "#636EFA"},
+        color_discrete_map={"AI-Assisted": "#ff3c5f", "Human": "#00f0ff"},
         labels={"week": "Week", "count": "Commits"},
     )
+    apply_dark_layout(trend_fig)
     trend_fig.update_layout(legend=dict(orientation="h", y=-0.15))
 
     # Pie chart: classification breakdown
@@ -120,6 +90,7 @@ def render_overview(filters, *_):
         color="classification",
         color_discrete_map=CLASS_COLORS,
     )
+    apply_dark_layout(pie_fig)
 
     # Bar chart: Top 10 repos by AI ratio
     repo_stats = df.groupby("repo_name").apply(
@@ -136,8 +107,9 @@ def render_overview(filters, *_):
         title="Top 10 Repos by AI-Assisted Code %",
         labels={"repo_short": "Repository", "ai_pct": "AI-Assisted %"},
         color="ai_pct",
-        color_continuous_scale="Reds",
+        color_continuous_scale=[[0, "#0a0a1a"], [0.5, "#b34dff"], [1, "#ff00e5"]],
     )
+    apply_dark_layout(bar_fig)
 
     # Recent commits table
     recent = df.head(15)[["sha", "repo_name", "author_login", "committed_at", "classification", "message"]]

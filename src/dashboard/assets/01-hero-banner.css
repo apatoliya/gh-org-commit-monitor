@@ -1,0 +1,87 @@
+/* ===== Hero Banner ===== */
+.hero-banner {
+    background: linear-gradient(-45deg, #0a0a1a, #1a0030, #001a33, #0a1a0a, #1a0030);
+    background-size: 400% 400%;
+    animation: heroGradient 15s ease infinite;
+    padding: 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes heroGradient {
+    0%   { background-position: 0% 50%; }
+    25%  { background-position: 100% 50%; }
+    50%  { background-position: 100% 0%; }
+    75%  { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Scanline overlay */
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 240, 255, 0.03) 2px,
+        rgba(0, 240, 255, 0.03) 4px
+    );
+    pointer-events: none;
+}
+
+/* Animated light sweep */
+.hero-banner::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 60%);
+    animation: heroSweep 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes heroSweep {
+    0%, 100% { transform: translate(-30%, -30%); }
+    50%      { transform: translate(30%, 30%); }
+}
+
+.hero-title {
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.5), 0 0 40px rgba(0, 240, 255, 0.2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-tagline {
+    color: var(--neon-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    opacity: 0.8;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+
+/* Animated neon border line */
+.hero-banner-border {
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-green), var(--neon-cyan));
+    background-size: 200% 100%;
+    animation: borderGlow 3s linear infinite;
+}
+
+@keyframes borderGlow {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}

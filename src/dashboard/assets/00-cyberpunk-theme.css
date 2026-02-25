@@ -1,0 +1,363 @@
+/* ===== CSS Custom Properties (Design Tokens) ===== */
+:root {
+    --bg-primary: #0a0a1a;
+    --bg-secondary: #12122a;
+    --bg-card: #161635;
+    --bg-sidebar: #0e0e25;
+    --bg-input: #1a1a3e;
+
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff00e5;
+    --neon-green: #39ff14;
+    --neon-yellow: #f0e130;
+    --neon-red: #ff3c5f;
+    --neon-purple: #b34dff;
+
+    --text-primary: #e0e0ff;
+    --text-secondary: #8888aa;
+    --text-muted: #666688;
+
+    --border-glow: rgba(0, 240, 255, 0.3);
+    --shadow-neon-cyan: 0 0 15px rgba(0, 240, 255, 0.3), 0 0 30px rgba(0, 240, 255, 0.1);
+    --shadow-neon-magenta: 0 0 15px rgba(255, 0, 229, 0.3), 0 0 30px rgba(255, 0, 229, 0.1);
+
+    --font-mono: 'Courier New', 'Fira Code', monospace;
+    --transition-default: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ===== Global Reset for Dark Theme ===== */
+body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ===== Sidebar ===== */
+.sidebar-col {
+    background-color: var(--bg-sidebar) !important;
+    border-right: 1px solid rgba(0, 240, 255, 0.15) !important;
+}
+
+.nav-pills .nav-link {
+    color: var(--text-secondary) !important;
+    border-radius: 4px;
+    transition: var(--transition-default);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: transparent !important;
+    border-left: 3px solid transparent;
+}
+
+.nav-pills .nav-link:hover {
+    color: var(--neon-cyan) !important;
+    background-color: rgba(0, 240, 255, 0.08) !important;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+}
+
+.nav-pills .nav-link.active {
+    background-color: rgba(0, 240, 255, 0.05) !important;
+    color: var(--neon-cyan) !important;
+    border-left: 3px solid var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+}
+
+/* ===== Filters Bar ===== */
+.filters-bar {
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.12) !important;
+}
+
+/* ===== Dash Dropdowns ===== */
+.Select-control {
+    background-color: var(--bg-input) !important;
+    border-color: rgba(0, 240, 255, 0.2) !important;
+    color: var(--text-primary) !important;
+}
+
+.Select-menu-outer {
+    background-color: var(--bg-input) !important;
+    border-color: rgba(0, 240, 255, 0.2) !important;
+}
+
+.Select-option {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+}
+
+.Select-option.is-focused {
+    background-color: rgba(0, 240, 255, 0.15) !important;
+}
+
+.Select-value-label {
+    color: var(--text-primary) !important;
+}
+
+.Select-placeholder {
+    color: var(--text-secondary) !important;
+}
+
+.Select-input input {
+    color: var(--text-primary) !important;
+}
+
+.Select--multi .Select-value {
+    background-color: rgba(0, 240, 255, 0.15) !important;
+    border-color: rgba(0, 240, 255, 0.3) !important;
+    color: var(--neon-cyan) !important;
+}
+
+.Select--multi .Select-value-icon {
+    border-right-color: rgba(0, 240, 255, 0.3) !important;
+}
+
+.Select--multi .Select-value-label {
+    color: var(--neon-cyan) !important;
+}
+
+.Select-arrow-zone .Select-arrow {
+    border-top-color: var(--text-secondary) !important;
+}
+
+/* ===== Dash DatePickerRange ===== */
+.DateInput_input {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.85rem !important;
+}
+
+.DateRangePickerInput {
+    background-color: var(--bg-input) !important;
+    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+    border-radius: 4px !important;
+}
+
+.DateRangePickerInput_arrow svg {
+    fill: var(--text-secondary) !important;
+}
+
+.CalendarDay__default {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-color: rgba(0, 240, 255, 0.08) !important;
+}
+
+.CalendarDay__selected {
+    background: var(--neon-cyan) !important;
+    color: var(--bg-primary) !important;
+}
+
+.CalendarDay__hovered_span,
+.CalendarDay__selected_span {
+    background: rgba(0, 240, 255, 0.2) !important;
+    color: var(--neon-cyan) !important;
+}
+
+.CalendarMonth_caption {
+    color: var(--text-primary) !important;
+}
+
+.DayPicker,
+.CalendarMonthGrid,
+.CalendarMonth {
+    background: var(--bg-card) !important;
+}
+
+.DayPickerNavigation_button__default {
+    background: var(--bg-input) !important;
+    border-color: rgba(0, 240, 255, 0.2) !important;
+}
+
+.DayPickerNavigation_svg__horizontal {
+    fill: var(--text-secondary) !important;
+}
+
+/* ===== Cyber Button ===== */
+.btn-cyber {
+    background: transparent !important;
+    border: 1px solid var(--neon-cyan) !important;
+    color: var(--neon-cyan) !important;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: var(--transition-default);
+}
+
+.btn-cyber:hover {
+    background: var(--neon-cyan) !important;
+    color: var(--bg-primary) !important;
+    box-shadow: var(--shadow-neon-cyan);
+}
+
+/* ===== KPI Cards ===== */
+.kpi-card {
+    background: var(--bg-card) !important;
+    border: 1px solid rgba(0, 240, 255, 0.15) !important;
+    border-radius: 8px !important;
+    transition: var(--transition-default);
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+}
+
+.kpi-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: var(--neon-cyan) !important;
+    box-shadow: var(--shadow-neon-cyan);
+}
+
+.kpi-card .card-body {
+    padding: 1.2rem !important;
+}
+
+.kpi-card .card-subtitle {
+    color: var(--text-secondary) !important;
+    font-family: var(--font-mono);
+    font-size: 0.7rem !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.kpi-card .card-title {
+    font-family: var(--font-mono);
+    font-size: 1.8rem !important;
+    font-weight: 700;
+    margin-bottom: 0 !important;
+}
+
+/* ===== Neon Text Color Classes ===== */
+.text-neon-cyan {
+    color: var(--neon-cyan) !important;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.text-neon-magenta {
+    color: var(--neon-magenta) !important;
+    text-shadow: 0 0 10px rgba(255, 0, 229, 0.5);
+}
+
+.text-neon-green {
+    color: var(--neon-green) !important;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+
+.text-neon-yellow {
+    color: var(--neon-yellow) !important;
+    text-shadow: 0 0 10px rgba(240, 225, 48, 0.5);
+}
+
+.text-neon-red {
+    color: var(--neon-red) !important;
+    text-shadow: 0 0 10px rgba(255, 60, 95, 0.5);
+}
+
+.text-neon-purple {
+    color: var(--neon-purple) !important;
+    text-shadow: 0 0 10px rgba(179, 77, 255, 0.5);
+}
+
+/* ===== Tables (dbc.Table) ===== */
+.table {
+    color: var(--text-primary) !important;
+}
+
+.table th {
+    background-color: var(--bg-secondary) !important;
+    color: var(--neon-cyan) !important;
+    border-color: rgba(0, 240, 255, 0.15) !important;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    border-color: rgba(0, 240, 255, 0.08) !important;
+    font-size: 0.85rem;
+    background-color: transparent !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(0, 240, 255, 0.03) !important;
+    color: var(--text-primary) !important;
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(0, 240, 255, 0.08) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ===== Page Headings ===== */
+h3, h5 {
+    color: var(--text-primary) !important;
+    font-family: var(--font-mono);
+}
+
+/* ===== Alerts ===== */
+.alert-info {
+    background-color: rgba(0, 240, 255, 0.1) !important;
+    border-color: rgba(0, 240, 255, 0.3) !important;
+    color: var(--neon-cyan) !important;
+}
+
+/* ===== Text Muted ===== */
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+/* ===== Content Area ===== */
+.content-area {
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-cyan);
+}
+
+/* ===== Graph containers ===== */
+.js-plotly-plot .plotly .modebar {
+    background-color: transparent !important;
+}
+
+.js-plotly-plot .plotly .modebar-btn path {
+    fill: var(--text-secondary) !important;
+}
+
+.js-plotly-plot .plotly .modebar-btn:hover path {
+    fill: var(--neon-cyan) !important;
+}
+
+/* ===== Card (generic) ===== */
+.card {
+    background-color: var(--bg-card) !important;
+    border-color: rgba(0, 240, 255, 0.12) !important;
+}

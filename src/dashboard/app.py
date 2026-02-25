@@ -3,14 +3,17 @@ from dash import dcc, html, Input, Output, callback
 import dash_bootstrap_components as dbc
 
 from src.database import init_db, get_repo_names, get_author_logins
+from src.dashboard.pages.home import layout as overview_layout
+from src.dashboard.pages.repos import layout as repos_layout
+from src.dashboard.pages.authors import layout as authors_layout
+from src.dashboard.pages.details import layout as details_layout
 
 init_db()
 
 app = dash.Dash(
     __name__,
-    use_pages=True,
-    pages_folder="pages",
-    external_stylesheets=[dbc.themes.FLATLY],
+    use_pages=False,
+    external_stylesheets=[dbc.themes.CYBORG],
     suppress_callback_exceptions=True,
     title="GitHub Org Commit Monitor",
 )
@@ -59,29 +62,43 @@ filters_bar = dbc.Row(
             width=3,
         ),
         dbc.Col(
-            dbc.Button("Refresh", id="refresh-btn", color="primary", size="sm"),
+            dbc.Button("Refresh", id="refresh-btn", className="btn-cyber", size="sm"),
             width=2,
             className="d-flex align-items-center",
         ),
     ],
-    className="p-3 bg-light border-bottom",
+    className="p-3 filters-bar",
 )
+
+PAGE_MAP = {
+    "/": overview_layout,
+    "/repos": repos_layout,
+    "/authors": authors_layout,
+    "/details": details_layout,
+}
 
 app.layout = dbc.Container(
     [
-        dbc.Row(
-            [
-                dbc.Col(
-                    html.H4("GitHub Org Commit Monitor", className="text-white mb-0"),
-                    className="bg-dark p-3",
-                )
-            ]
+        dcc.Location(id="url", refresh=False),
+        # Background animations
+        html.Div(className="bg-grid"),
+        html.Div(
+            [html.Div(className="particle") for _ in range(20)],
+            className="bg-particles",
         ),
+        # Hero banner
+        html.Div([
+            html.Div([
+                html.H4("GitHub Org Commit Monitor", className="hero-title"),
+                html.P("Real-time AI Code Detection & Analytics", className="hero-tagline"),
+            ], className="hero-banner"),
+            html.Div(className="hero-banner-border"),
+        ]),
         filters_bar,
         dbc.Row(
             [
-                dbc.Col(sidebar, width=2, className="bg-light border-end min-vh-100"),
-                dbc.Col(dash.page_container, width=10, className="p-4"),
+                dbc.Col(sidebar, width=2, className="sidebar-col min-vh-100"),
+                dbc.Col(html.Div(id="page-content"), width=10, className="p-4 content-area"),
             ]
         ),
         # Auto-refresh every 5 minutes
@@ -92,6 +109,14 @@ app.layout = dbc.Container(
     fluid=True,
     className="p-0",
 )
+
+
+@callback(
+    Output("page-content", "children"),
+    Input("url", "pathname"),
+)
+def display_page(pathname):
+    return PAGE_MAP.get(pathname, overview_layout)
 
 
 @callback(
